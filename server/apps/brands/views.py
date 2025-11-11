@@ -5,6 +5,7 @@ from django.utils import timezone
 from .models import Brand
 from .serializers import BrandSerializer
 import requests
+import os
 
 
 class BrandViewSet(viewsets.ModelViewSet):
@@ -59,10 +60,17 @@ def fetch_metrics_by_handle(request, handle: str):
 
 
 def fetch_external_metrics_for_brand(brand: Brand):
+
+    # Prepare GitHub headers with optional token
+    headers = {}
+    token = os.getenv("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"token {token}"
+
     if brand.platform.lower() == "github":
         url = f"https://api.github.com/users/{brand.handle}"
         try:
-            r = requests.get(url, timeout=10)
+            r = requests.get(url, headers=headers, timeout=10)
         except requests.RequestException:
             return {"error": "external request failed"}
         if r.status_code != 200:
@@ -76,3 +84,4 @@ def fetch_external_metrics_for_brand(brand: Brand):
             "html_url": data.get("html_url"),
         }
     return {"error": "unsupported platform"}
+
