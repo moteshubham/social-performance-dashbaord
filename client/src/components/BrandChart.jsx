@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
+import './BrandChart.css';
 
 export default function BrandChart({ brands }) {
   // prepare data: x = handle, y = followers
@@ -38,7 +39,7 @@ export default function BrandChart({ brands }) {
   };
 
   return (
-    <div className="card">
+    <div className="card brand-chart-card">
       <h3>Overview</h3>
       <Bar data={data} options={options} />
     </div>

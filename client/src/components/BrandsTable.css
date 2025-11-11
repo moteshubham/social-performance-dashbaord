@@ -1,0 +1,24 @@
+/* Container card styles can be shared globally via .card */
+
+.brands-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.brands-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.btn-fetch {
+  margin-right: 8px;
+}
+
+.btn-delete {
+  background: #999;
+}
+
+

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { listBrands, createBrand, deleteBrand, fetchMetricsForBrand } from '../services/api';
+import './BrandsTable.css';
 
 export default function BrandsTable({ onDataUpdate }) {
   const [brands, setBrands] = useState([]);
@@ -42,12 +43,12 @@ export default function BrandsTable({ onDataUpdate }) {
 
   return (
     <div className="card">
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12 }}>
+      <div className="brands-header">
         <h3>Tracked Brands</h3>
         <div className="small">{loading ? 'Loading...' : ''}</div>
       </div>
 
-      <form onSubmit={handleCreate} style={{ display:'flex', gap:8, marginBottom:12 }}>
+      <form onSubmit={handleCreate} className="brands-form">
         <input value={form.name} onChange={e=>setForm(s=>({...s, name:e.target.value}))} placeholder="Brand name" />
         <input value={form.handle} onChange={e=>setForm(s=>({...s, handle:e.target.value}))} placeholder="handle (github)" />
         <button className="button" type="submit">Add</button>
@@ -65,8 +66,8 @@ export default function BrandsTable({ onDataUpdate }) {
               <td>{b.last_followers ?? '—'}</td>
               <td>{b.last_public_repos ?? '—'}</td>
               <td>
-                <button className="button" onClick={()=>handleFetchMetrics(b.id)} style={{marginRight:8}}>Fetch</button>
-                <button className="button" onClick={()=>handleDelete(b.id)} style={{background:'#999'}}>Delete</button>
+                <button className="button btn-fetch" onClick={()=>handleFetchMetrics(b.id)}>Fetch</button>
+                <button className="button btn-delete" onClick={()=>handleDelete(b.id)}>Delete</button>
               </td>
             </tr>
           ))}
